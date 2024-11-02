@@ -1,0 +1,65 @@
+[gd_scene load_steps=3 format=3 uid="uid://bl7tqgie3hal5"]
+
+[ext_resource type="Texture2D" uid="uid://ba6rp02ngon4r" path="res://assets/cards/C2.png" id="1_d0pwu"]
+[ext_resource type="Script" path="res://Deck.gd" id="1_skdg0"]
+
+[node name="Main" type="Node2D"]
+position = Vector2(-73, -24)
+
+[node name="Deck" type="Node" parent="."]
+script = ExtResource("1_skdg0")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(5, 5)
+
+[node name="Me" type="Node" parent="."]
+
+[node name="Card1" type="Sprite2D" parent="Me"]
+position = Vector2(-144, 96)
+texture = ExtResource("1_d0pwu")
+
+[node name="Card2" type="Sprite2D" parent="Me"]
+position = Vector2(-97, 96)
+texture = ExtResource("1_d0pwu")
+
+[node name="Card3" type="Sprite2D" parent="Me"]
+position = Vector2(-49, 96)
+texture = ExtResource("1_d0pwu")
+
+[node name="Card4" type="Sprite2D" parent="Me"]
+position = Vector2(-1, 96)
+texture = ExtResource("1_d0pwu")
+
+[node name="Card5" type="Sprite2D" parent="Me"]
+position = Vector2(47, 96)
+texture = ExtResource("1_d0pwu")
+
+[node name="AI" type="Node" parent="."]
+
+[node name="Card1" type="Sprite2D" parent="AI"]
+position = Vector2(-144, -136)
+texture = ExtResource("1_d0pwu")
+
+[node name="Card2" type="Sprite2D" parent="AI"]
+position = Vector2(-97, -136)
+texture = ExtResource("1_d0pwu")
+
+[node name="Card3" type="Sprite2D" parent="AI"]
+position = Vector2(-49, -136)
+texture = ExtResource("1_d0pwu")
+
+[node name="Card4" type="Sprite2D" parent="AI"]
+position = Vector2(-1, -136)
+texture = ExtResource("1_d0pwu")
+
+[node name="Card5" type="Sprite2D" parent="AI"]
+position = Vector2(47, -136)
+texture = ExtResource("1_d0pwu")
+
+[node name="DealButton" type="Button" parent="."]
+offset_right = 8.0
+offset_bottom = 8.0
+text = "Deal"
+
+[connection signal="pressed" from="DealButton" to="Deck" method="_on_deal_button_pressed"]
+[connection signal="pressed" from="DealButton" to="Deck" method="_on_button_pressed"]
