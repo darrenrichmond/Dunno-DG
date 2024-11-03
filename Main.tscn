@@ -1,10 +1,29 @@
-[gd_scene load_steps=3 format=3 uid="uid://bl7tqgie3hal5"]
+[gd_scene load_steps=5 format=3 uid="uid://bl7tqgie3hal5"]
 
+[ext_resource type="Script" path="res://Main.gd" id="1_70fy0"]
 [ext_resource type="Texture2D" uid="uid://ba6rp02ngon4r" path="res://assets/cards/C2.png" id="1_d0pwu"]
 [ext_resource type="Script" path="res://Deck.gd" id="1_skdg0"]
+[ext_resource type="Texture2D" uid="uid://bln76nwvfxvlp" path="res://assets/cards/CB.png" id="2_xxhv4"]
 
 [node name="Main" type="Node2D"]
 position = Vector2(-73, -24)
+script = ExtResource("1_70fy0")
+
+[node name="DrawPile" type="Button" parent="."]
+offset_left = -39.0
+offset_top = -24.0
+offset_right = 33.0
+offset_bottom = 48.0
+icon = ExtResource("2_xxhv4")
+flat = true
+
+[node name="DiscardPile" type="Button" parent="."]
+offset_left = 33.0
+offset_top = -24.0
+offset_right = 105.0
+offset_bottom = 48.0
+icon = ExtResource("1_d0pwu")
+flat = true
 
 [node name="Deck" type="Node" parent="."]
 script = ExtResource("1_skdg0")
@@ -14,52 +33,129 @@ zoom = Vector2(5, 5)
 
 [node name="Me" type="Node" parent="."]
 
-[node name="Card1" type="Sprite2D" parent="Me"]
-position = Vector2(-144, 96)
-texture = ExtResource("1_d0pwu")
+[node name="Card1" type="Button" parent="Me"]
+offset_left = -184.0
+offset_top = 56.0
+offset_right = -112.0
+offset_bottom = 128.0
+icon = ExtResource("1_d0pwu")
+flat = true
 
-[node name="Card2" type="Sprite2D" parent="Me"]
-position = Vector2(-97, 96)
-texture = ExtResource("1_d0pwu")
+[node name="Card2" type="Button" parent="Me"]
+offset_left = -136.0
+offset_top = 56.0
+offset_right = -64.0
+offset_bottom = 128.0
+icon = ExtResource("1_d0pwu")
+flat = true
 
-[node name="Card3" type="Sprite2D" parent="Me"]
-position = Vector2(-49, 96)
-texture = ExtResource("1_d0pwu")
+[node name="Card3" type="Button" parent="Me"]
+offset_left = -88.0
+offset_top = 56.0
+offset_right = -16.0
+offset_bottom = 128.0
+icon = ExtResource("1_d0pwu")
+flat = true
 
-[node name="Card4" type="Sprite2D" parent="Me"]
-position = Vector2(-1, 96)
-texture = ExtResource("1_d0pwu")
+[node name="Card4" type="Button" parent="Me"]
+offset_left = -40.0
+offset_top = 56.0
+offset_right = 32.0
+offset_bottom = 128.0
+icon = ExtResource("1_d0pwu")
+flat = true
 
-[node name="Card5" type="Sprite2D" parent="Me"]
-position = Vector2(47, 96)
-texture = ExtResource("1_d0pwu")
+[node name="Card5" type="Button" parent="Me"]
+offset_left = 8.0
+offset_top = 56.0
+offset_right = 80.0
+offset_bottom = 128.0
+icon = ExtResource("1_d0pwu")
+flat = true
+
+[node name="ScoreMe" type="Label" parent="Me"]
+offset_left = 80.0
+offset_top = 72.0
+offset_right = 141.0
+offset_bottom = 95.0
+text = "Score: 0"
+
+[node name="PassButton" type="Button" parent="Me"]
+offset_left = -232.0
+offset_top = 72.0
+offset_right = -189.0
+offset_bottom = 103.0
+text = "Pass"
+
+[node name="HelpText" type="Button" parent="Me"]
+anchors_preset = -1
+anchor_bottom = 0.005
+offset_left = -184.0
+offset_top = 24.0
+offset_right = 86.0
+offset_bottom = 46.5
+text = "You can't have more than 5 cards."
+flat = true
 
 [node name="AI" type="Node" parent="."]
 
-[node name="Card1" type="Sprite2D" parent="AI"]
-position = Vector2(-144, -136)
-texture = ExtResource("1_d0pwu")
+[node name="Card1" type="Button" parent="AI"]
+offset_left = -184.0
+offset_top = -184.0
+offset_right = -112.0
+offset_bottom = -112.0
+icon = ExtResource("1_d0pwu")
+flat = true
 
-[node name="Card2" type="Sprite2D" parent="AI"]
-position = Vector2(-97, -136)
-texture = ExtResource("1_d0pwu")
+[node name="Card2" type="Button" parent="AI"]
+offset_left = -136.0
+offset_top = -184.0
+offset_right = -64.0
+offset_bottom = -112.0
+icon = ExtResource("1_d0pwu")
+flat = true
 
-[node name="Card3" type="Sprite2D" parent="AI"]
-position = Vector2(-49, -136)
-texture = ExtResource("1_d0pwu")
+[node name="Card3" type="Button" parent="AI"]
+offset_left = -88.0
+offset_top = -184.0
+offset_right = -16.0
+offset_bottom = -112.0
+icon = ExtResource("1_d0pwu")
+flat = true
 
-[node name="Card4" type="Sprite2D" parent="AI"]
-position = Vector2(-1, -136)
-texture = ExtResource("1_d0pwu")
+[node name="Card4" type="Button" parent="AI"]
+offset_left = -40.0
+offset_top = -184.0
+offset_right = 32.0
+offset_bottom = -112.0
+icon = ExtResource("1_d0pwu")
+flat = true
 
-[node name="Card5" type="Sprite2D" parent="AI"]
-position = Vector2(47, -136)
-texture = ExtResource("1_d0pwu")
+[node name="Card5" type="Button" parent="AI"]
+offset_left = 8.0
+offset_top = -184.0
+offset_right = 80.0
+offset_bottom = -112.0
+icon = ExtResource("1_d0pwu")
+flat = true
+
+[node name="ScoreAI" type="Label" parent="AI"]
+offset_left = 80.0
+offset_top = -160.0
+offset_right = 141.0
+offset_bottom = -137.0
+text = "Score: 0"
 
 [node name="DealButton" type="Button" parent="."]
-offset_right = 8.0
-offset_bottom = 8.0
+offset_left = -234.0
+offset_top = -158.0
+offset_right = -191.0
+offset_bottom = -127.0
 text = "Deal"
 
+[connection signal="pressed" from="DrawPile" to="Deck" method="_on_draw_pile_pressed"]
+[connection signal="pressed" from="Me/Card1" to="Deck" method="_on_card_1_pressed"]
+[connection signal="pressed" from="Me/Card2" to="Deck" method="_on_card_2_pressed"]
+[connection signal="pressed" from="Me/PassButton" to="Deck" method="_on_pass_button_pressed"]
 [connection signal="pressed" from="DealButton" to="Deck" method="_on_deal_button_pressed"]
 [connection signal="pressed" from="DealButton" to="Deck" method="_on_button_pressed"]

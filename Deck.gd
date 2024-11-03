@@ -8,9 +8,19 @@ var full_deck = ["C2", "C3", "C4", "C5", "C6", "C7", "C8", "C9", "C10", "CJ", "C
 #current_deck is the deck that we are playing with. it starts empty and we will duplicate the full_deck into it when we deal the cards
 var current_deck = []
 
+var discard_pile = []
+
 #Me is the Node2D that reprents the player's hand. #AI is the computer player's hand. 
 @onready var me = $"../Me"
 @onready var ai = $"../AI"
+
+@onready var me_cards = []
+@onready var ai_cards = []
+
+@onready var discard_pile_node = $"../DiscardPile"
+
+@onready var my_score = 0
+@onready var ai_score = 0
 
 #we are going to translate card abbreviations in full_deck to asset file names. card_asset_path is the path to where we are storing the assets
 var card_assets_path = "res://assets/cards/"
@@ -23,20 +33,28 @@ func _new_card():
 	current_deck.erase(card)
 	return card
 
+func render_card(card_node, card):
+	#get the full path to the specific asset for the card
+	var card_texture_path = card_assets_path + card + ".png"
+	#load that asset from the file system to the game, so it can be used as a texture on the node
+	var card_texture = load(card_texture_path)
+	#now we can set the Texture property on the node to the full path to the asset
+	if card_node is Node2D:
+		card_node.texture = card_texture
+	elif card_node is Button:
+		card_node.icon = card_texture
+	else:
+		print("Oops!")
+
 #set the appropriate assets on the appropriate node for the cards in the array for that player
 func assign_cards(player, cards):
 	#we need to loop over all the cards passed, setting the index each time
 	for i in range(cards.size()):
-		#get the full path to the specific asset for the card
-		var card_texture_path = card_assets_path + cards[i] + ".png"
-		#load that asset from the file system to the game, so it can be used as a texture on the node
-		var card_texture = load(card_texture_path)
 		#get the node for the card at the same index as the card we are working with.
 		#The array is 0 based, but our card nodes start with 1
-		#teh index is an integer - we have to convert it to a string to concatenate with the "Card" string to get the node name
+		#the index is an integer - we have to convert it to a string to concatenate with the "Card" string to get the node name
 		var card_node = player.get_node("Card" + str(i + 1))
-		#now we can set the Texture property on the node to the full path to the asset
-		card_node.texture = card_texture
+		render_card(card_node, cards[i])
 
 #fill out the players' hands with new ards from the current_deck
 func deal_cards(): 
@@ -45,19 +63,24 @@ func deal_cards():
 	
 	#For now, we just want me and ai to have 5 new cards each.
 	#TODO: make hand size configurable
-	var me_cards = [_new_card(), _new_card(), _new_card(), _new_card(), _new_card()]
-	var ai_cards = [_new_card(), _new_card(), _new_card(), _new_card(), _new_card()]
+	me_cards = [_new_card(), _new_card(), _new_card(), _new_card(), _new_card()]
+	ai_cards = [_new_card(), _new_card(), _new_card(), _new_card(), _new_card()]
 	
 	#assign the cards to the appropriate nodes for me and the ai
 	assign_cards(me, me_cards)
 	assign_cards(ai, ai_cards)
+	
+	discard_pile = [_new_card()]
+	render_card(discard_pile_node, discard_pile.front())
+	
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	#The first time we come into the game, the cards should be dealt.
 	#TODO: might be cool to have the cards start with backs showing, then Deal turns over
+	print("entered the _ready() function")
 	deal_cards()
-
+	discard_pile.push_front(_new_card())
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -66,3 +89,51 @@ func _process(delta: float) -> void:
 func _on_deal_button_pressed() -> void:
 	#whenever the DealButton is pressed, we should deal the cards
 	deal_cards()
+	me.get_node("HelpText").visible = false
+	print("Deal button pressed")
+
+func draw_card():
+	var drawn_card = current_deck.pop_front()
+	return drawn_card
+	
+func get_node_for_index(idx):
+	var card_node = me.get_node("Card" + str(idx + 1))
+	
+func add_card_to_hand(card):
+	var first_blank_space_idx = me_cards.find("")
+	me_cards[first_blank_space_idx] = card
+	render_card(get_node_for_index(first_blank_space_idx),card)
+
+func _on_draw_pile_pressed() -> void:
+	if me_cards.find(""):
+		me.get_node("HelpText").visible = true
+	else:
+		var drawn_card = draw_card()
+		add_card_to_hand(drawn_card)
+
+func discard(card_node, card):
+	discard_pile.push_front(card)
+	render_card(discard_pile_node, card)
+	var index = me_cards.find(card)
+	me_cards[index] = ""
+	card_node.icon = null
+	
+
+func _on_card_1_pressed() -> void:
+	discard(me.get_node("Card1"), me_cards[0])
+	me.get_node("HelpText").visible = false
+
+func ai_turn():
+	var drawn_card = _new_card()
+	discard_pile.push_front(drawn_card)
+	render_card(discard_pile_node, drawn_card)
+
+func _on_pass_button_pressed() -> void:
+	ai_turn()
+	print("Pass button pressed")
+	me.get_node("HelpText").visible = false
+
+
+func _on_card_2_pressed() -> void:
+	discard(me.get_node("Card2"), me_cards[1])
+	me.get_node("HelpText").visible = false
