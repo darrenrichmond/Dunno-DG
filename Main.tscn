@@ -1,13 +1,21 @@
-[gd_scene load_steps=5 format=3 uid="uid://bl7tqgie3hal5"]
+[gd_scene load_steps=6 format=3 uid="uid://bl7tqgie3hal5"]
 
 [ext_resource type="Script" path="res://Main.gd" id="1_70fy0"]
 [ext_resource type="Texture2D" uid="uid://ba6rp02ngon4r" path="res://assets/cards/C2.png" id="1_d0pwu"]
 [ext_resource type="Script" path="res://Deck.gd" id="1_skdg0"]
 [ext_resource type="Texture2D" uid="uid://bln76nwvfxvlp" path="res://assets/cards/CB.png" id="2_xxhv4"]
+[ext_resource type="Script" path="res://Card.gd" id="5_xvmwq"]
 
 [node name="Main" type="Node2D"]
 position = Vector2(-73, -24)
 script = ExtResource("1_70fy0")
+
+[node name="DealButton" type="Button" parent="."]
+offset_left = -234.0
+offset_top = -158.0
+offset_right = -191.0
+offset_bottom = -127.0
+text = "Deal"
 
 [node name="DrawPile" type="Button" parent="."]
 offset_left = -39.0
@@ -27,6 +35,9 @@ flat = true
 
 [node name="Deck" type="Node" parent="."]
 script = ExtResource("1_skdg0")
+
+[node name="Card" type="Node" parent="."]
+script = ExtResource("5_xvmwq")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(5, 5)
@@ -146,16 +157,9 @@ offset_right = 141.0
 offset_bottom = -137.0
 text = "Score: 0"
 
-[node name="DealButton" type="Button" parent="."]
-offset_left = -234.0
-offset_top = -158.0
-offset_right = -191.0
-offset_bottom = -127.0
-text = "Deal"
-
+[connection signal="pressed" from="DealButton" to="Deck" method="_on_deal_button_pressed"]
+[connection signal="pressed" from="DealButton" to="Deck" method="_on_button_pressed"]
 [connection signal="pressed" from="DrawPile" to="Deck" method="_on_draw_pile_pressed"]
 [connection signal="pressed" from="Me/Card1" to="Deck" method="_on_card_1_pressed"]
 [connection signal="pressed" from="Me/Card2" to="Deck" method="_on_card_2_pressed"]
 [connection signal="pressed" from="Me/PassButton" to="Deck" method="_on_pass_button_pressed"]
-[connection signal="pressed" from="DealButton" to="Deck" method="_on_deal_button_pressed"]
-[connection signal="pressed" from="DealButton" to="Deck" method="_on_button_pressed"]

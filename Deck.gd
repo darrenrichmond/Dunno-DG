@@ -18,6 +18,7 @@ var discard_pile = []
 @onready var ai_cards = []
 
 @onready var discard_pile_node = $"../DiscardPile"
+@onready var card_scene = $"../Card"
 
 @onready var my_score = 0
 @onready var ai_score = 0
@@ -34,17 +35,8 @@ func _new_card():
 	return card
 
 func render_card(card_node, card):
-	#get the full path to the specific asset for the card
-	var card_texture_path = card_assets_path + card + ".png"
-	#load that asset from the file system to the game, so it can be used as a texture on the node
-	var card_texture = load(card_texture_path)
-	#now we can set the Texture property on the node to the full path to the asset
-	if card_node is Node2D:
-		card_node.texture = card_texture
-	elif card_node is Button:
-		card_node.icon = card_texture
-	else:
-		print("Oops!")
+	card_scene.render_card(card_node, card)
+	
 
 #set the appropriate assets on the appropriate node for the cards in the array for that player
 func assign_cards(player, cards):
